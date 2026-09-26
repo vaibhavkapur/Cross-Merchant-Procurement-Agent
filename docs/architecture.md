@@ -1,5 +1,7 @@
 # Architecture
 
+[Documentation home](index.md)
+
 ```text
 Buyer → Procurement UI → Buyer API
                             ├─ MCP client → Company tools (inventory, policy, vendors)
@@ -20,7 +22,7 @@ The agent proposes actions. The workflow validates and persists them. Protocol a
 
 | Process | Default URL | Protocol |
 | --- | --- | --- |
-| `apps/web` | http://127.0.0.1:3000 | HTTPS UI |
+| `apps/web` | http://127.0.0.1:3000 | HTTP development UI |
 | `apps/api` | http://127.0.0.1:4000 | Application REST |
 | `apps/worker` | (no listen) | Outbox consumer |
 | `apps/company-mcp` | http://127.0.0.1:4010/mcp | MCP Streamable HTTP |
@@ -41,3 +43,7 @@ Suppliers stay separate processes even on one machine. That separation is part o
 ## Demo fixtures
 
 Prices, tax (0 bps), and shipping rules live in `fixtures/`. Every simulated failure is an explicit flag on the procurement request (`supplier_timeout`, `shipping_increase`, `drop_completion_response`, `inject_policy_bypass`).
+
+## Data and implementation scope
+
+The buyer workflow persists through SQLite or PostgreSQL, while merchant fixtures keep process-local state. Recovery demonstrations retain the merchant process while restarting or retrying the buyer worker. See [Database](database.md), [Configuration](configuration.md), and [Deployment](deployment.md).
