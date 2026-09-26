@@ -1,0 +1,8 @@
+{
+  "name": "@procurement/domain",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": { ".": "./src/index.ts" },
+  "dependencies": { "@procurement/protocol-contracts": "*", "@procurement/policy": "*", "@procurement/audit": "*", "pg": "^8.16.0" }
+}

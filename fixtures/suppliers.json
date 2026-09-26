@@ -1,0 +1,25 @@
+{
+  "_fixture": "Two independent A2A supplier agents. Each quotes from exactly one merchant's catalog and returns a procurement.quote.v1 artifact. Lead days determine the promised delivery date relative to quotation time.",
+  "suppliers": [
+    {
+      "id": "supplier_a",
+      "name": "Northwind Sales Agent",
+      "agent_url": "http://127.0.0.1:4021",
+      "merchant_id": "merchant_a",
+      "default_fulfillment_option": "nw-freight-ground",
+      "quote_validity_minutes": 120,
+      "payment_terms": "card_on_completion",
+      "return_window_days": 30
+    },
+    {
+      "id": "supplier_b",
+      "name": "Contoso Quotation Agent",
+      "agent_url": "http://127.0.0.1:4022",
+      "merchant_id": "merchant_b",
+      "default_fulfillment_option": "ct-2day",
+      "quote_validity_minutes": 120,
+      "payment_terms": "card_on_completion",
+      "return_window_days": 14
+    }
+  ]
+}

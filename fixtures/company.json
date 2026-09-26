@@ -1,0 +1,87 @@
+{
+  "_fixture": "Synthetic company data for local demos and tests. Nothing here is real; tokens are demo credentials only.",
+  "organization": { "id": "org_acme", "name": "Acme Robotics (fixture)" },
+  "principals": [
+    {
+      "id": "buyer_alice",
+      "organization_id": "org_acme",
+      "name": "Alice Nguyen",
+      "email": "alice@acme.example",
+      "roles": ["requester", "approver"],
+      "can_purchase": true,
+      "token": "fixture-token-alice"
+    },
+    {
+      "id": "buyer_bob",
+      "organization_id": "org_acme",
+      "name": "Bob Okafor",
+      "email": "bob@acme.example",
+      "roles": ["requester"],
+      "can_purchase": false,
+      "token": "fixture-token-bob"
+    },
+    {
+      "id": "svc_worker",
+      "organization_id": "org_acme",
+      "name": "Recovery worker",
+      "email": "worker@acme.example",
+      "roles": ["service"],
+      "can_purchase": false,
+      "token": "fixture-token-worker"
+    }
+  ],
+  "cost_centers": [
+    {
+      "id": "cc_it_hardware",
+      "organization_id": "org_acme",
+      "name": "IT Hardware",
+      "currency": "USD",
+      "allocated_minor": 250000,
+      "committed_minor": 0
+    },
+    {
+      "id": "cc_office",
+      "organization_id": "org_acme",
+      "name": "Office Supplies",
+      "currency": "USD",
+      "allocated_minor": 50000,
+      "committed_minor": 0
+    }
+  ],
+  "destinations": [
+    {
+      "destination_id": "dest_hq",
+      "name": "Acme HQ receiving dock",
+      "line_one": "100 Fixture Way",
+      "line_two": "Dock B",
+      "locality": "Austin",
+      "region": "TX",
+      "postal_code": "78701",
+      "country": "US",
+      "contact_name": "Acme Receiving",
+      "contact_email": "receiving@acme.example",
+      "contact_phone": "+15125550100",
+      "timezone": "America/Chicago"
+    }
+  ],
+  "inventory": [
+    { "sku": "MON-24-OLD", "category": "monitor", "description": "24\" 1080p monitor (legacy)", "size_inches": 24, "on_hand": 3, "reserved": 3, "location": "HQ storeroom" },
+    { "sku": "MON-27-A", "category": "monitor", "description": "27\" QHD IPS monitor", "size_inches": 27, "on_hand": 1, "reserved": 0, "location": "HQ storeroom" },
+    { "sku": "KB-104", "category": "keyboard", "description": "104-key wired keyboard", "on_hand": 40, "reserved": 5, "location": "HQ storeroom" }
+  ],
+  "policy": {
+    "organization_id": "org_acme",
+    "currency": "USD",
+    "max_single_purchase_minor": 500000,
+    "approval_required_above_minor": 0,
+    "allowed_categories": ["monitor", "keyboard", "laptop", "docking_station"],
+    "require_delivery_by_deadline": true,
+    "min_quote_validity_minutes": 5,
+    "approval_ttl_minutes": 60,
+    "approved_vendors": [
+      { "merchant_id": "merchant_a", "name": "Northwind Displays (UCP fixture)", "protocol": "ucp", "categories": ["monitor", "docking_station"], "preference_rank": 1 },
+      { "merchant_id": "merchant_b", "name": "Contoso Office Tech (ACP fixture)", "protocol": "acp", "categories": ["monitor", "keyboard", "laptop"], "preference_rank": 2 }
+    ]
+  },
+  "payment_credential_ref": "vault://fixture/corp-card/it-hardware"
+}

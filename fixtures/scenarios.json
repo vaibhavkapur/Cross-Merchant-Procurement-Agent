@@ -1,0 +1,29 @@
+{
+  "_fixture": "Demo scenarios. `simulation` flags are honoured only by the fixture merchants/suppliers and are recorded on the request so every injected failure is visible in the timeline.",
+  "scenarios": {
+    "A": {
+      "title": "Constraint-aware selection (deadline beats price)",
+      "text": "Buy 10 monitors, at least 27 inch, total ≤ $2,000 including delivery, delivered to HQ before Friday, charge IT Hardware",
+      "expect": "supplier_a (merchant_a, UCP) is cheaper but its 9-day freight misses Friday; supplier_b (merchant_b, ACP) at $1,900 delivered is selected. Merchant_a's quote is shown as ineligible with the failed constraint.",
+      "simulation": {}
+    },
+    "B": {
+      "title": "Changed checkout invalidates approval",
+      "text": "Buy 10 monitors, at least 27 inch, total ≤ $2,000 including delivery, delivered to HQ before Friday, charge IT Hardware",
+      "expect": "After approval, merchant_b raises shipping by $25. Execution re-reads the checkout, the digest no longer matches, the approval is invalidated and the request returns to awaiting_approval with a field-level diff.",
+      "simulation": { "shipping_increase": { "merchant_id": "merchant_b", "amount_minor": 2500 } }
+    },
+    "C": {
+      "title": "Independent UCP path",
+      "text": "Buy 10 monitors, at least 27 inch, total ≤ $2,000 including delivery, delivered to HQ within 3 weeks, charge IT Hardware",
+      "expect": "With a later deadline merchant_a's cheaper quote ($1,708 delivered) wins and the purchase completes over UCP v2026-08-25.",
+      "simulation": {}
+    },
+    "D": {
+      "title": "Dropped completion response is recovered without buying twice",
+      "text": "Buy 10 monitors, at least 27 inch, total ≤ $2,000 including delivery, delivered to HQ before Friday, charge IT Hardware",
+      "expect": "merchant_b accepts the order but never returns the completion response. The attempt lands in outcome_unknown; the recovery worker reads the native checkout, finds the order and records exactly one purchase.",
+      "simulation": { "drop_completion_response": "merchant_b" }
+    }
+  }
+}

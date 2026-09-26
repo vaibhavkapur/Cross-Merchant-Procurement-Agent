@@ -1,0 +1,42 @@
+{
+  "_fixture": "Two simulated merchants. merchant_a speaks UCP v2026-08-25; merchant_b speaks ACP 2026-01-16. Prices are integer minor units (USD cents). Tax is a labelled fixture value (0) so totals are easy to verify by hand.",
+  "merchants": [
+    {
+      "id": "merchant_a",
+      "name": "Northwind Displays (UCP fixture)",
+      "protocol": "ucp",
+      "base_url": "http://127.0.0.1:4031",
+      "discovery_url": "http://127.0.0.1:4031/.well-known/ucp",
+      "api_key_env": "MERCHANT_A_API_KEY",
+      "api_key_default": "fixture-merchant-a-key",
+      "catalog": [
+        { "item_id": "nw-mon-27-qhd", "sku": "NW-27Q", "title": "Northwind 27\" QHD IPS Monitor", "category": "monitor", "size_inches": 27, "unit_price_minor": 17000, "stock": 40 },
+        { "item_id": "nw-mon-24-fhd", "sku": "NW-24F", "title": "Northwind 24\" FHD Monitor", "category": "monitor", "size_inches": 24, "unit_price_minor": 11000, "stock": 100 }
+      ],
+      "fulfillment_options": [
+        { "option_id": "nw-freight-ground", "title": "Freight ground", "price_minor": 800, "lead_days": 9 },
+        { "option_id": "nw-freight-express", "title": "Freight express", "price_minor": 6500, "lead_days": 4 }
+      ],
+      "tax_rate_bps": 0,
+      "payment_handler": { "id": "fixture_card_handler", "name": "dev.ucp.fixture_card", "version": "2026-08-25" }
+    },
+    {
+      "id": "merchant_b",
+      "name": "Contoso Office Tech (ACP fixture)",
+      "protocol": "acp",
+      "base_url": "http://127.0.0.1:4032",
+      "discovery_url": "http://127.0.0.1:4032/.well-known/acp-fixture-capabilities",
+      "api_key_env": "MERCHANT_B_API_KEY",
+      "api_key_default": "fixture-merchant-b-key",
+      "catalog": [
+        { "item_id": "ct-mon-27-ips", "sku": "CT-27IPS", "title": "Contoso 27\" IPS Business Monitor", "category": "monitor", "size_inches": 27, "unit_price_minor": 18000, "stock": 25 },
+        { "item_id": "ct-kb-104", "sku": "CT-KB104", "title": "Contoso 104-key Keyboard", "category": "keyboard", "unit_price_minor": 2500, "stock": 500 }
+      ],
+      "fulfillment_options": [
+        { "option_id": "ct-2day", "title": "Two-day delivery", "price_minor": 10000, "lead_days": 2 }
+      ],
+      "tax_rate_bps": 0,
+      "payment_provider": "stripe"
+    }
+  ]
+}
