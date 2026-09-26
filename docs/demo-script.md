@@ -1,5 +1,7 @@
 # Four-minute demo script
 
+[Documentation home](index.md)
+
 Sign in is implicit: the UI uses `fixture-token-alice`.
 
 ## 0:00 — Request (Demo A)
