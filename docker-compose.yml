@@ -1,0 +1,107 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: procurement
+      POSTGRES_USER: procurement
+      POSTGRES_PASSWORD: procurement
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U procurement"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+
+  company-mcp:
+    image: node:22-bookworm
+    working_dir: /app
+    volumes: [".:/app"]
+    command: node apps/company-mcp/src/main.ts
+    environment:
+      PORT: "4010"
+    ports: ["4010:4010"]
+
+  supplier-a:
+    image: node:22-bookworm
+    working_dir: /app
+    volumes: [".:/app"]
+    command: node apps/supplier-a/src/main.ts
+    environment:
+      PORT: "4021"
+      PUBLIC_URL: http://supplier-a:4021
+    ports: ["4021:4021"]
+
+  supplier-b:
+    image: node:22-bookworm
+    working_dir: /app
+    volumes: [".:/app"]
+    command: node apps/supplier-b/src/main.ts
+    environment:
+      PORT: "4022"
+      PUBLIC_URL: http://supplier-b:4022
+    ports: ["4022:4022"]
+
+  merchant-ucp:
+    image: node:22-bookworm
+    working_dir: /app
+    volumes: [".:/app"]
+    command: node apps/merchant-ucp/src/main.ts
+    environment:
+      PORT: "4031"
+    ports: ["4031:4031"]
+
+  merchant-acp:
+    image: node:22-bookworm
+    working_dir: /app
+    volumes: [".:/app"]
+    command: node apps/merchant-acp/src/main.ts
+    environment:
+      PORT: "4032"
+    ports: ["4032:4032"]
+
+  api:
+    image: node:22-bookworm
+    working_dir: /app
+    volumes: [".:/app"]
+    command: node apps/api/src/main.ts
+    environment:
+      PORT: "4000"
+      PUBLIC_URL: http://api:4000
+      DATABASE_URL: postgres://procurement:procurement@postgres:5432/procurement
+      COMPANY_MCP_URL: http://company-mcp:4010/mcp
+      MERCHANT_MERCHANT_A_URL: http://merchant-ucp:4031
+      MERCHANT_MERCHANT_B_URL: http://merchant-acp:4032
+      SUPPLIER_SUPPLIER_A_URL: http://supplier-a:4021
+      SUPPLIER_SUPPLIER_B_URL: http://supplier-b:4022
+      PLATFORM_UCP_PROFILE_URL: http://api:4000/.well-known/ucp
+    ports: ["4000:4000"]
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  worker:
+    image: node:22-bookworm
+    working_dir: /app
+    volumes: [".:/app"]
+    command: node apps/worker/src/main.ts
+    environment:
+      DATABASE_URL: postgres://procurement:procurement@postgres:5432/procurement
+      COMPANY_MCP_URL: http://company-mcp:4010/mcp
+      MERCHANT_MERCHANT_A_URL: http://merchant-ucp:4031
+      MERCHANT_MERCHANT_B_URL: http://merchant-acp:4032
+      SUPPLIER_SUPPLIER_A_URL: http://supplier-a:4021
+      SUPPLIER_SUPPLIER_B_URL: http://supplier-b:4022
+      PLATFORM_UCP_PROFILE_URL: http://api:4000/.well-known/ucp
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  web:
+    image: node:22-bookworm
+    working_dir: /app/apps/web
+    volumes: [".:/app"]
+    command: npx next dev --port 3000 --hostname 0.0.0.0
+    environment:
+      NEXT_PUBLIC_API_URL: http://127.0.0.1:4000
+    ports: ["3000:3000"]

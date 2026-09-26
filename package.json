@@ -1,0 +1,37 @@
+{
+  "name": "cross-merchant-procurement",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22.18"
+  },
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "node --test --test-concurrency=1 'tests/**/*.test.ts'",
+    "test:unit": "node --test 'tests/unit/**/*.test.ts'",
+    "test:integration": "node --test --test-concurrency=1 'tests/integration/**/*.test.ts'",
+    "test:recovery": "node --test --test-concurrency=1 'tests/recovery/**/*.test.ts'",
+    "test:report": "node scripts/test-report.ts",
+    "dev": "node scripts/dev.ts",
+    "dev:api": "node apps/api/src/main.ts",
+    "dev:worker": "node apps/worker/src/main.ts",
+    "dev:company-mcp": "node apps/company-mcp/src/main.ts",
+    "dev:supplier-a": "node apps/supplier-a/src/main.ts",
+    "dev:supplier-b": "node apps/supplier-b/src/main.ts",
+    "dev:merchant-ucp": "node apps/merchant-ucp/src/main.ts",
+    "dev:merchant-acp": "node apps/merchant-acp/src/main.ts",
+    "dev:web": "npm --workspace apps/web run dev",
+    "demo": "node scripts/demo.ts",
+    "spec:manifest": "node scripts/spec-manifest.ts"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/node": "^22.18.0",
+    "typescript": "^5.9.0"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "extends": "./tsconfig.base.json",
+  "include": [
+    "packages/*/src/**/*.ts",
+    "apps/api/src/**/*.ts",
+    "apps/worker/src/**/*.ts",
+    "apps/company-mcp/src/**/*.ts",
+    "apps/supplier-a/src/**/*.ts",
+    "apps/supplier-b/src/**/*.ts",
+    "apps/merchant-ucp/src/**/*.ts",
+    "apps/merchant-acp/src/**/*.ts",
+    "tests/**/*.ts",
+    "scripts/**/*.ts"
+  ],
+  "exclude": ["node_modules", "apps/web"]
+}

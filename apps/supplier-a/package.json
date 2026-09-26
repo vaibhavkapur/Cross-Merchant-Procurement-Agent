@@ -1,0 +1,19 @@
+{
+  "name": "@procurement/supplier-a",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/server.ts"
+  },
+  "scripts": {
+    "start": "node src/main.ts"
+  },
+  "dependencies": {
+    "@a2a-js/sdk": "^1.2.1",
+    "express": "^5.1.0",
+    "@procurement/protocol-contracts": "*",
+    "@procurement/domain": "*",
+    "@procurement/policy": "*"
+  }
+}

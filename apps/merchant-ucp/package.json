@@ -1,0 +1,17 @@
+{
+  "name": "@procurement/merchant-ucp",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/server.ts"
+  },
+  "scripts": {
+    "start": "node src/main.ts"
+  },
+  "dependencies": {
+    "fastify": "^5.6.0",
+    "@procurement/protocol-contracts": "*",
+    "@procurement/domain": "*"
+  }
+}
