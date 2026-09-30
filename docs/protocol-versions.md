@@ -1,5 +1,7 @@
 # Protocol versions
 
+[Documentation home](index.md)
+
 This build pins released schemas. Do not treat adapters as a generic UCP-to-ACP translator.
 
 | Protocol | Role | Version | Specification | Immutable revision | SDK / vendor |
